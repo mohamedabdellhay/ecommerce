@@ -8,7 +8,7 @@ async function create(data: {}) {
 
 
 
-export default function Dashboard() {
+export default async function Dashboard() {
 
 
     return(

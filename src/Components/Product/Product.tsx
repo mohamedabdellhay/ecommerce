@@ -1,14 +1,16 @@
 import Image from "next/image"
 import "./product.css";
 import imageRating from "../../images/rating.png"
-// import { Card } from "flowbite-react";
+import Link from "next/link";
+
+
 
 
 
 export default function ProductCard({id, thumbnail, title, price, rating}: {id: number, thumbnail: string, title: string, price:number, rating: number | boolean |any}){
 
     let imagePosition = `-83px -92px`;
-
+    const item = {id, title};
     switch(rating >0){
         case rating < 1:
              imagePosition = `-83px -191px`;
@@ -45,29 +47,35 @@ export default function ProductCard({id, thumbnail, title, price, rating}: {id: 
 
     return (
         <div className="product-card">
-            <Image
-                        src={thumbnail}
-                        alt={title}
-                        width={300}
-                        height={300} 
-                        // blurDataURL="data:..." automatically provided
-                        // placeholder="blur" // Optional blur-up while loading 
-                        />
-            <div className="product-card__content">
-                <h3>{title}</h3>
-                <div className="product-card__rating" style={{
-                        display: "flex",
-                        gap: "7px",
+                <Link href={`/product/${title.replace(/ +/g, '-')}/${id}`}>
+                <Image
+                            src={thumbnail}
+                            alt={title}
+                            width={300}
+                            height={300} 
+                            // blurDataURL="data:..." automatically provided
+                            // placeholder="blur" // Optional blur-up while loading 
+                            />
+                
+                        </Link>
+                <div className="product-card__content">
+                    <Link href={`/product/${title.replace(/ +/g, '-')}/${id}`}>
+                        <h3>{title}</h3>
+                        <div className="product-card__rating" style={{
+                                display: "flex",
+                                gap: "7px",
+                                
+                        }}>
+                            <span className="product-card__rating-value" style={ratingStyle}></span>
+                            <span style={{margin: "10px"}} className="product-card__rating__count">{rating}</span>
+                        </div>
+                    </Link>
+                    <div className="product-card__action">
+                        <p className="product-card__price">${price}</p>
                         
-                }}>
-                    <span className="product-card__rating-value" style={ratingStyle}></span>
-                    <span style={{margin: "10px"}} className="product-card__rating__count">{rating}</span>
-                </div>
-                <div className="product-card__action">
-                    <p className="product-card__price">${price}</p>
-                    <button className="product-card__button">Add to cart</button>
+                        <button className="product-card__button">Add to cart</button>
+                    </div>
                 </div>
             </div>
-        </div>
     )
 }
